@@ -10,18 +10,18 @@ const routes = [
     component: DashboardLayout,
     routes: [
       {
-        path: '/about',
-        exact: true,
-        component: lazy(() => import('views/About'))
-      },
-      {
         path: '/',
         exact: true,
         component: lazy(() => import('views/About'))
       },
       {
+        path: '/About',
+        exact: true,
+        component: lazy(() => import('views/About'))
+      },
+      {
         path: '/',
-        component: lazy(() => import('views/Quiz'))
+        component: lazy(() => import('views/Toolkits'))
       }
     ]
   }

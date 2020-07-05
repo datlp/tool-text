@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 
 import { Page } from 'components';
 import { ListItemText, ListItemAvatar, Avatar } from '@material-ui/core';
-import useRouter from 'utils/useRouter';
 const useStyles = makeStyles(theme => ({
   root: {
     margin: '0 auto',
@@ -48,11 +47,6 @@ const useStyles = makeStyles(theme => ({
 
 const About = () => {
   const classes = useStyles();
-  const router = useRouter();
-
-  useEffect(() => {
-    router.location.pathname === '/' && router.history.replace('/about');
-  }, [router.location.pathname, router.history]);
 
   return (
     <Page className={classes.root} title={'Toolkits'}>

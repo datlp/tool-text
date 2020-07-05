@@ -17,6 +17,7 @@ import DoneIcon from '@material-ui/icons/Done';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import useDebounce from 'utils/useDebounce';
 import useRouter from 'utils/useRouter';
+import { TABS } from 'layouts/Dashboard/Dashboard';
 const useStyles = makeStyles(theme => ({
   root: {
     margin: '0 auto',
@@ -56,9 +57,79 @@ const useStyles = makeStyles(theme => ({
 function splitByEnter(text) {
   return (text && typeof text === 'string' && text.split(/\n/)) || [];
 }
+const RemoveDublicateRight = props => {
+  const { pathname, input, onSetOutPut = () => null } = props;
 
+  return (
+    pathname === `/${TABS[1].title.replace(/[ ]/g, '-')}` && (
+      <React.Fragment>
+        <ListItem>
+          <Button
+            onClick={() => {
+              const arr = splitByEnter(input);
+              let unique = [];
+              arr.forEach(item => {
+                if (item && unique.indexOf(item) === -1) unique.push(item);
+              });
+
+              onSetOutPut(unique.join('\n'));
+            }}>
+            Excute
+          </Button>
+        </ListItem>
+      </React.Fragment>
+    )
+  );
+};
+const TimeToSecond = props => {
+  const { pathname, input, onSetOutPut = () => null } = props;
+
+  const convertTextToTime = (str = '') => {
+    if (str) {
+      if (str.match(/[^0-9:]/)) return str;
+      const times = [1, 60, 3600];
+      str = str.replace(/[^(0-9/:/)]/g, '');
+      let sum = 0;
+      const arr = str.split(':');
+      if (arr.length === 0) return -1;
+      if (arr.length === 1) return parseInt(arr[0]) * 60;
+      arr.forEach((item, index) => {
+        sum = sum + parseInt(item) * times[arr.length - index - 1];
+      });
+      return sum;
+    }
+    return str;
+  };
+  return (
+    pathname === `/${TABS[3].title.replace(/[ ]/g, '-')}` && (
+      <React.Fragment>
+        <ListItem>
+          <TextField
+            style={{ marginLeft: 16 }}
+            id="endText"
+            placeholder="Enter end text each lines..."></TextField>
+        </ListItem>
+        <ListItem>
+          <Button
+            onClick={() => {
+              onSetOutPut(
+                splitByEnter(input)
+                  .map(item => {
+                    return `${convertTextToTime(item)}\n`;
+                  })
+                  .join('')
+              );
+            }}>
+            Excute
+          </Button>
+        </ListItem>
+      </React.Fragment>
+    )
+  );
+};
 const Quiz = () => {
   const router = useRouter();
+  console.log('Quiz -> router', router);
   const classes = useStyles();
   const [copied, setCopied] = useState(false);
   const [input, setInput] = useState('');
@@ -85,7 +156,7 @@ const Quiz = () => {
   return (
     <Page className={classes.root} title={'Toolkits'}>
       <Grid container>
-        <Grid sm={12} md={8} lg={8}>
+        <Grid item sm={12} md={8} lg={8}>
           <Card>
             <CardContent>
               <TextField
@@ -104,16 +175,6 @@ const Quiz = () => {
                 rows={30}
               />
             </CardContent>
-            <CardActions>
-              <Grid container justify="flex-end">
-                <Button
-                  disable={Boolean(input)}
-                  color="secondary"
-                  onClick={handleCopyToClipboard}>
-                  Clear data
-                </Button>
-              </Grid>
-            </CardActions>
           </Card>
           <Divider style={{ marginTop: 16 }}></Divider>
           <Card style={{ marginTop: 16 }}>
@@ -147,7 +208,7 @@ const Quiz = () => {
             </CardActions>
           </Card>
         </Grid>
-        <Grid sm={12} md={4} lg={4}>
+        <Grid item sm={12} md={4} lg={4}>
           <ListItem>
             <Divider spacing={2} />
             <ListItemText primary="Input" />
@@ -157,7 +218,6 @@ const Quiz = () => {
 
             <ListItemText style={{ marginLeft: 8 }} primary="Count" />
           </ListItem>
-
           <ListItem>
             <ListItemText
               style={{ marginLeft: 16 }}
@@ -165,7 +225,6 @@ const Quiz = () => {
               secondary={input.length}
             />
           </ListItem>
-
           <ListItem>
             <ListItemText
               style={{ marginLeft: 16 }}
@@ -173,15 +232,12 @@ const Quiz = () => {
               secondary={splitByEnter(input).length}
             />
           </ListItem>
-
           <ListItem>
             <Divider spacing={2} />
 
             <ListItemText style={{ marginLeft: 8 }} primary="Options" />
           </ListItem>
-
           {/*  */}
-
           {router.location.pathname === '/add-text-to-line' && (
             <React.Fragment>
               <ListItem>
@@ -208,7 +264,6 @@ const Quiz = () => {
                       )
                       .join('\n');
 
-                    console.log('formated', formated);
                     setOutput(formated);
                   }}>
                   Excute
@@ -216,6 +271,16 @@ const Quiz = () => {
               </ListItem>
             </React.Fragment>
           )}
+          <RemoveDublicateRight
+            pathname={router.location.pathname}
+            input={input}
+            onSetOutPut={data => setOutput(data)}
+          />
+          <TimeToSecond
+            pathname={router.location.pathname}
+            input={input}
+            onSetOutPut={data => setOutput(data)}
+          />
           {router.location.pathname === '/clone-each-line' && (
             <React.Fragment>
               <ListItem>
@@ -242,7 +307,6 @@ const Quiz = () => {
                       )
                       .join('\n');
 
-                    console.log('formated', formated);
                     setOutput(formated);
                   }}>
                   Excute
@@ -255,4 +319,5 @@ const Quiz = () => {
     </Page>
   );
 };
+
 export default Quiz;

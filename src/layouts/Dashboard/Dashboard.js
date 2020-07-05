@@ -42,31 +42,35 @@ const useStyles = makeStyles(theme => ({
   MenuItem: { marginBottom: 16 }
 }));
 
+export const TABS = [
+  { title: 'About' },
+  { title: 'Remove dublicate lines' },
+  { title: 'Clone each lines' },
+  { title: 'Time string to second' },
+  { title: 'Add text each lines' }
+];
+
 const Dashboard = ({ route }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <Grid container>
-        <Grid sm={0} md={3} lg={3}>
+        <Grid item sm={12} md={3} lg={3}>
           <div style={{ height: 'calc(100vh - 64px)' }}>
             <PerfectScrollbar>
-              <MenuItem
-                style={{ marginTop: 8 }}
-                title="About"
-                path="/about"></MenuItem>
-              <MenuItem
-                style={{ marginTop: 8 }}
-                title="Clone each line"
-                path="/clone-each-line"></MenuItem>
-              <MenuItem
-                style={{ marginTop: 8 }}
-                title="Add text to lines"
-                path="/add-text-to-line"></MenuItem>
+              {TABS.map(({ title = '' }, index) => (
+                <MenuItem
+                  key={`${title}-${index}`}
+                  style={{ marginTop: 8 }}
+                  title={title}
+                  path={`/${title.replace(/[ ]/g, '-')}`}
+                />
+              ))}
             </PerfectScrollbar>
           </div>
         </Grid>
-        <Grid sm={12} md={9} lg={9} style={{ position: 'relative' }}>
+        <Grid item sm={12} md={9} lg={9} style={{ position: 'relative' }}>
           <div
             style={{
               position: 'absolute',
@@ -93,11 +97,7 @@ const Dashboard = ({ route }) => {
 };
 function MenuItem({ className, title, style = {}, path }) {
   const router = useRouter();
-  console.log(
-    'MenuItem -> path === router.location.path',
-    path,
-    router.location.pathname
-  );
+
   return (
     <Link to={path}>
       <Card
