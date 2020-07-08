@@ -281,7 +281,7 @@ const Quiz = () => {
             input={input}
             onSetOutPut={data => setOutput(data)}
           />
-          {router.location.pathname === '/clone-each-line' && (
+          {router.location.pathname === '/Clone-each-lines' && (
             <React.Fragment>
               <ListItem>
                 <TextField
