@@ -47,7 +47,8 @@ export const TABS = [
   { title: 'Remove dublicate lines' },
   { title: 'Clone each lines' },
   { title: 'Time string to second' },
-  { title: 'Add text each lines' }
+  { title: 'Add text each lines' },
+  { title: 'Change alias' }
 ];
 
 const Dashboard = ({ route }) => {
