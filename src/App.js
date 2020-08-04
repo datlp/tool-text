@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router } from 'react-router-dom';
+import { BrowserRoute } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import MomentUtils from '@date-io/moment';
 import { ThemeProvider } from '@material-ui/styles';
@@ -25,12 +25,12 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <MuiPickersUtilsProvider utils={MomentUtils}>
-        <Router history={history}>
+        <BrowserRoute history={history}>
           <ScrollReset />
           <GoogleAnalytics />
           <CookiesNotification />
           {renderRoutes(routes)}
-        </Router>
+        </BrowserRoute>
       </MuiPickersUtilsProvider>
     </ThemeProvider>
   );
