@@ -24,7 +24,8 @@ import { splitByEnter, change_alias } from 'utils/text';
 import CloneEachLines from './components/CloneEachLines';
 import AddTextToLine from './components/AddTextToLine';
 import { TOOL_TEXTS_CONST } from 'constant';
-import About from './components';
+import About, { Regex } from './components';
+
 const useStyles = makeStyles(theme => ({
   root: {
     margin: '0 auto',
@@ -147,8 +148,17 @@ const Toolkits = () => {
           />
         );
 
+      case `/${change_alias(TOOL_TEXTS_CONST.REGEX.label)}`:
+        return (
+          <Regex
+            pathname={router.location.pathname}
+            input={input}
+            onSetOutPut={data => setOutput(data)}
+          />
+        );
+
       default:
-        return <About />;
+        return null;
     }
   };
 
