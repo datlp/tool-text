@@ -6,6 +6,8 @@ import { LinearProgress, CardHeader, Card, Grid } from '@material-ui/core';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { Link } from 'react-router-dom';
 import useRouter from 'utils/useRouter';
+import { TOOL_TEXTS_CONST } from 'constant';
+import { change_alias } from 'utils/text';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -51,8 +53,12 @@ export const TABS = [
   { title: 'Change alias' }
 ];
 
-const Dashboard = ({ route }) => {
+const ToolTexts = ({ route }) => {
   const classes = useStyles();
+  const tabs = Object.keys(TOOL_TEXTS_CONST).map(key => ({
+    label: TOOL_TEXTS_CONST[key].label,
+    pathname: `/${change_alias(TOOL_TEXTS_CONST[key].label)}`
+  }));
 
   return (
     <div className={classes.root}>
@@ -60,12 +66,12 @@ const Dashboard = ({ route }) => {
         <Grid item sm={12} md={3} lg={3}>
           <div style={{ height: 'calc(100vh - 64px)' }}>
             <PerfectScrollbar>
-              {TABS.map(({ title = '' }, index) => (
+              {tabs.map(({ label = '', pathname }, index) => (
                 <MenuItem
-                  key={`${title}-${index}`}
+                  key={`${label}-${index}`}
                   style={{ marginTop: 8 }}
-                  title={title}
-                  path={`/${title.replace(/[ ]/g, '-')}`}
+                  title={label}
+                  path={pathname}
                 />
               ))}
             </PerfectScrollbar>
@@ -113,8 +119,8 @@ function MenuItem({ className, title, style = {}, path }) {
     </Link>
   );
 }
-Dashboard.propTypes = {
+ToolTexts.propTypes = {
   route: PropTypes.object
 };
 
-export default Dashboard;
+export default ToolTexts;

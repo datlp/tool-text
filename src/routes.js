@@ -2,7 +2,7 @@
 /* eslint-disable react/display-name */
 import { lazy } from 'react';
 
-import DashboardLayout from './layouts/Dashboard';
+import DashboardLayout from './layouts/ToolTexts';
 
 const routes = [
   {
@@ -11,17 +11,7 @@ const routes = [
     routes: [
       {
         path: '/',
-        exact: true,
-        component: lazy(() => import('views/About'))
-      },
-      {
-        path: '/About',
-        exact: true,
-        component: lazy(() => import('views/About'))
-      },
-      {
-        path: '/',
-        component: lazy(() => import('views/Toolkits'))
+        component: lazy(() => import('views/tool-texts/Toolkits'))
       }
     ]
   }

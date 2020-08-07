@@ -7,7 +7,7 @@ import { Card, CardHeader, CardContent, Typography } from '@material-ui/core';
 
 import Skeleton from '@material-ui/lab/Skeleton';
 import { useSelector } from 'react-redux';
-import { change_alias } from 'utils/getInitials';
+import { change_alias } from 'utils/text';
 
 const useStyles = makeStyles(theme => ({
   root: {},
