@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
 import MomentUtils from '@date-io/moment';
 import { ThemeProvider } from '@material-ui/styles';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -14,13 +13,11 @@ import './mixins/validate';
 import './mixins/prismjs';
 import './assets/scss/index.scss';
 
-const history = createBrowserHistory();
-
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <MuiPickersUtilsProvider utils={MomentUtils}>
-        <BrowserRouter history={history}>{renderRoutes(routes)}</BrowserRouter>
+        <BrowserRouter>{renderRoutes(routes)}</BrowserRouter>
       </MuiPickersUtilsProvider>
     </ThemeProvider>
   );
