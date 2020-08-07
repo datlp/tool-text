@@ -8,11 +8,6 @@ import { renderRoutes } from 'react-router-config';
 
 import theme from './theme';
 import routes from './routes';
-import {
-  ScrollReset,
-  GoogleAnalytics,
-  CookiesNotification
-} from './components';
 import './mixins/chartjs';
 import './mixins/moment';
 import './mixins/validate';
@@ -25,12 +20,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <MuiPickersUtilsProvider utils={MomentUtils}>
-        <BrowserRouter history={history}>
-          <ScrollReset />
-          <GoogleAnalytics />
-          <CookiesNotification />
-          {renderRoutes(routes)}
-        </BrowserRouter>
+        <BrowserRouter history={history}>{renderRoutes(routes)}</BrowserRouter>
       </MuiPickersUtilsProvider>
     </ThemeProvider>
   );

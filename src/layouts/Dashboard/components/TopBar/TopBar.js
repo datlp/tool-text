@@ -123,10 +123,7 @@ const TopBar = props => {
     };
   }, []);
 
-  const handleLogout = () => {
-    history.push('/auth/login');
-    // dispatch(logout());
-  };
+  const handleLogout = () => {};
 
   const handlePricingOpen = () => {
     setPricingModalOpen(true);
