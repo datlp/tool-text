@@ -26,11 +26,12 @@ const Regex = props => {
               document.getElementById('regex-text').value,
               'g'
             );
-            // const replace = document.getElementById('replace-text').value;
             onSetOutPut(
               splitByEnter(input)
                 .map(item => {
-                  return item.match(regex) && item.match(regex).length + '\n';
+                  return `${
+                    item.match(regex) ? item.match(regex).length : 0
+                  }\n`;
                 })
                 .join('')
             );
